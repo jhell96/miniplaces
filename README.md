@@ -1,1 +1,1 @@
-# miniplaces
+# Miniplaces
