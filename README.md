@@ -1,2 +1,2 @@
 # Miniplaces
-Requires: tensorflow, keras, keras_resnet
+Requires: Python3.5, tensorflow, keras, keras_resnet
