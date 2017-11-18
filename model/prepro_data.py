@@ -47,16 +47,16 @@ if __name__=='__main__':
 		'name': 'miniplaces',
 		'split': 'train',
 		'img_resize': 256,
-		'data_root': '../../data/images/',	# MODIFY PATH ACCORDINGLY
-    		'data_list': '../../data/train.txt'
+		'data_root': '../data/images/',	# MODIFY PATH ACCORDINGLY
+    		'data_list': '../data/train.txt'
 	}
 
 	params_val = {
 		'name': 'miniplaces',
 		'split': 'val',
 		'img_resize': 256,
-		'data_root': '../../data/images/',	# MODIFY PATH ACCORDINGLY
-    		'data_list': '../../data/val.txt'
+		'data_root': '../data/images/',	# MODIFY PATH ACCORDINGLY
+    		'data_list': '../data/val.txt'
 	}
 
 	createH5(params_train)

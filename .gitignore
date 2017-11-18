@@ -1,5 +1,6 @@
 # Ignore data directory!
 data/
+data.zip
 
 # Compiled source #
 ###################
