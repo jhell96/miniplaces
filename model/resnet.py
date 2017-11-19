@@ -4,18 +4,21 @@ from keras import backend as K
 import keras_resnet.models
 import numpy as np
 from DataLoader import *
+import os
+from scipy import misc
 print("Imported modules")
 
 img_width, img_height = 128, 128
 num_classes = 100
 
 epochs = 2
-batch_size = 16
+batch_size = 32
 nb_train_samples = 100000
 nb_validation_samples = 10000
 
-train_path = '../data/images/train'
-val_path = '../data/images/val'
+train_path = '../data/images/train/'
+val_path = '../data/images/val/'
+test_path = '../data/images/test/'
 
 if K.image_data_format() == 'channels_first':
     input_shape = (3, img_width, img_height)
@@ -24,7 +27,7 @@ else:
 
 
 x = keras.layers.Input(input_shape)
-model = keras_resnet.models.ResNet18(x, classes=num_classes)
+model = keras_resnet.models.ResNet34(x, classes=num_classes)
 model.compile("adam", "categorical_crossentropy", ["accuracy"])
 print("Compiled model")
 
@@ -39,6 +42,18 @@ datagen = image.ImageDataGenerator(
         height_shift_range=0.2, # randomly shift images vertically (fraction of total height)
         horizontal_flip=True, # randomly flip images
         vertical_flip=False) # randomly flip images
+
+files = []
+for (d, dn, f) in os.walk(test_path):
+	files.extend(f)
+
+imgs = []
+for file in files:
+	imgs.append(misc.imread(test_path + file))
+
+imgs = np.array(imgs)
+
+datagen.fit(imgs)
 
 train_generator = datagen.flow_from_directory(
 		train_path,
@@ -59,6 +74,6 @@ model.fit_generator(
 		validation_data = validation_generator,
 		validation_steps = nb_validation_samples // batch_size)
 
-model.save_weights('trained_ResNet18.h5')
+model.save_weights('trained_ResNet34_centered.h5')
 
 print("Optimization Finished!")
