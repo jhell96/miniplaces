@@ -9,7 +9,7 @@ print("Imported modules")
 img_width, img_height = 128, 128
 num_classes = 100
 
-epochs = 2
+epochs = 15
 batch_size = 32
 nb_train_samples = 100000
 nb_validation_samples = 10000
@@ -26,7 +26,7 @@ else:
 x = keras.layers.Input(input_shape)
 model = keras_resnet.models.ResNet18(x, classes=num_classes)
 model.compile("adam", "categorical_crossentropy", ["accuracy"])
-model.load_weights('trained_ResNet18_3.h5')
+model.load_weights('trained_ResNet18_6.h5')
 print("Compiled model")
 
 datagen = image.ImageDataGenerator(
@@ -60,6 +60,6 @@ model.fit_generator(
 		validation_data = validation_generator,
 		validation_steps = nb_validation_samples // batch_size)
 
-model.save_weights('trained_ResNet18_4.h5')
+model.save_weights('trained_ResNet18_7.h5')
 
 print("Optimization Finished!")
