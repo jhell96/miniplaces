@@ -61,5 +61,16 @@ test_datagen.fit(imgs)
 
 results = model.predict(imgs, batch_size=batch_size)
 top_5 = np.argsort(results, axis=1)[:,-5:]
-print(files)
-print(top_5)
+
+mapping = [0] * 100
+f = open("../data/categories.txt", "r")
+for line in f:
+    result = [x.strip() for x in line.split(' ')]
+    category, i = result[0], int(result[1])
+    mapping[i] = category
+
+mapping = np.array(mapping)
+
+for i in range(20):
+    print(files[i])
+    print(mapping[top_5[i]])
