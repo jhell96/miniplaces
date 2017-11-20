@@ -82,7 +82,7 @@ top_5 = np.flip(np.argsort(results, axis=1)[:,-5:], 1)
 #     print(mapping[top_5[i]])
 
 out = open("output.txt", "a") # output file
-for i, line in enumerate(top_5):
+for i in range(len(top_5)):
     t = top_5[i]
-    out.write('test/' + files[i] + ' ' + t[0] + ' ' + t[1] + ' ' + t[2] + ' ' + t[3] + ' ' + t[4] + '\n')
+    out.write('test/' + files[i] + ' ' + str(t[0]) + ' ' + str(t[1]) + ' ' + str(t[2]) + ' ' + str(t[3]) + ' ' + str(t[4]) + '\n')
     
