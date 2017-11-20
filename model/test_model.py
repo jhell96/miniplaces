@@ -67,16 +67,22 @@ test_generator = test_datagen.flow_from_directory(
 
 # results = model.predict(imgs, batch_size=batch_size)
 results = model.predict_generator(test_generator, steps = nb_validation_samples//batch_size)
-top_5 = np.argsort(results, axis=1)[:,-5:]
+top_5 = np.flip(np.argsort(results, axis=1)[:,-5:], 1)
 
-mapping = [0] * 100
-f = open("../data/categories.txt", "r")
-for line in f:
-    result = [x.strip() for x in line.split(' ')]
-    category, i = result[0], int(result[1])
-    mapping[i] = category
+# mapping = [0] * 100
+# f = open("../data/categories.txt", "r")
+# for line in f:
+#     result = [x.strip() for x in line.split(' ')]
+#     category, i = result[0], int(result[1])
+#     mapping[i] = category
 
-mapping = np.array(mapping)
-for i in range(20):
-    print(files[i])
-    print(mapping[top_5[i]])
+# mapping = np.array(mapping)
+# for i in range(len(top_5)):
+#     print(files[i])
+#     print(mapping[top_5[i]])
+
+out = open("output.txt", "a") # output file
+for i, line in enumerate(top_5):
+    t = top_5[i]
+    out.write('test/' + files[i] + ' ' + t[0] + ' ' + t[1] + ' ' + t[2] + ' ' + t[3] + ' ' + t[4] + '\n')
+    
