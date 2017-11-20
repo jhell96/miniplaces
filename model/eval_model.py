@@ -54,13 +54,13 @@ for file in files:
 
 imgs = np.array(imgs)
 
-datagen.fit(imgs)
+test_datagen.fit(imgs)
 
 test_generator = test_datagen.flow_from_directory(
-		test_path,
+		val_path,
 		target_size = (img_width, img_height),
 		batch_size = batch_size,
-		shuffle = True)
+		shuffle = False)
 
-e = model.evaluate_generator(test_generator)
+e = model.evaluate_generator(test_generator, steps = nb_validation_samples // batch_size)
 print(e)
