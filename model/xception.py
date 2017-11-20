@@ -26,7 +26,7 @@ if K.image_data_format() == 'channels_first':
 else:
     input_shape = (img_width, img_height, 3)
 
-model = Xception(include_top=True, weights='None', input_shape=input_shape, pooling=None, classes=num_classes)
+model = Xception(include_top=True, weights=None, input_shape=input_shape, pooling=None, classes=num_classes)
 model.compile("adam", "categorical_crossentropy", ["accuracy"])
 print("Compiled model")
 
