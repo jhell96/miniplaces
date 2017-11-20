@@ -1,4 +1,8 @@
 import keras
+from keras.models import Sequential
+from keras.layers.core import Dense, Dropout, Flatten
+from keras.layers.convolutional import Convolution2D, MaxPooling2D, ZeroPadding2D
+from keras.layers import MaxPooling2D
 from keras.preprocessing import image
 from keras import backend as K
 import keras_resnet.models
@@ -7,6 +11,56 @@ from DataLoader import *
 import os
 from scipy import misc
 print("Imported modules")
+
+
+def VGG_16(input_shape):
+    model = Sequential()
+    model.add(ZeroPadding2D((1,1),input_shape=input_shape))
+    model.add(Convolution2D(64, 3, 3, activation='relu'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(64, 3, 3, activation='relu'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(128, 3, 3, activation='relu'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(128, 3, 3, activation='relu'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(256, 3, 3, activation='relu'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(256, 3, 3, activation='relu'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(256, 3, 3, activation='relu'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(512, 3, 3, activation='relu'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(512, 3, 3, activation='relu'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(512, 3, 3, activation='relu'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(512, 3, 3, activation='relu'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(512, 3, 3, activation='relu'))
+    model.add(ZeroPadding2D((1,1)))
+    model.add(Convolution2D(512, 3, 3, activation='relu'))
+    model.add(MaxPooling2D((2,2), strides=(2,2)))
+
+    model.add(Flatten())
+    model.add(Dense(4096, activation='relu'))
+    model.add(Dropout(0.5))
+    model.add(Dense(4096, activation='relu'))
+    model.add(Dropout(0.5))
+    model.add(Dense(2048, activation='relu'))    
+    model.add(Dense(750, activation='softmax'))
+    model.add(Dense(100, activation='softmax'))
+
+    return model
 
 img_width, img_height = 224, 224
 num_classes = 100
@@ -26,7 +80,7 @@ else:
     input_shape = (img_width, img_height, 3)
 
 
-model = get_VGG(input_shape)
+model = VGG_16(input_shape)
 model.compile("adam", "categorical_crossentropy", ["accuracy"])
 print("Compiled model")
 
@@ -77,32 +131,4 @@ model.save_weights('trained_vgg_centered.h5')
 
 print("Optimization Finished!")
 
-def get_VGG(input_shape):
 
-    model = Sequential([
-        Conv2D(64, (3, 3), input_shape=input_shape, padding='same',
-               activation='relu'),
-        Conv2D(64, (3, 3), activation='relu', padding='same'),
-        MaxPooling2D(pool_size=(2, 2), strides=(2, 2)),
-        Conv2D(128, (3, 3), activation='relu', padding='same'),
-        Conv2D(128, (3, 3), activation='relu', padding='same',),
-        MaxPooling2D(pool_size=(2, 2), strides=(2, 2)),
-        Conv2D(256, (3, 3), activation='relu', padding='same',),
-        Conv2D(256, (3, 3), activation='relu', padding='same',),
-        Conv2D(256, (3, 3), activation='relu', padding='same',),
-        MaxPooling2D(pool_size=(2, 2), strides=(2, 2)),
-        Conv2D(512, (3, 3), activation='relu', padding='same',),
-        Conv2D(512, (3, 3), activation='relu', padding='same',),
-        Conv2D(512, (3, 3), activation='relu', padding='same',),
-        MaxPooling2D(pool_size=(2, 2), strides=(2, 2)),
-        Conv2D(512, (3, 3), activation='relu', padding='same',),
-        Conv2D(512, (3, 3), activation='relu', padding='same',),
-        Conv2D(512, (3, 3), activation='relu', padding='same',),
-        MaxPooling2D(pool_size=(2, 2), strides=(2, 2)),
-        Flatten(),
-        Dense(4096, activation='relu'),
-        Dense(4096, activation='relu'),
-        Dense(1000, activation='softmax')
-    ])
-
-    return model

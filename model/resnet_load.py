@@ -29,7 +29,7 @@ else:
 x = keras.layers.Input(input_shape)
 model = keras_resnet.models.ResNet34(x, classes=num_classes)
 model.compile("adam", "categorical_crossentropy", ["accuracy"])
-model.load_weights('weights/trained_ResNet34_centered.h5')
+model.load_weights('weights/trained_ResNet34_centered_1.h5')
 print("Compiled model")
 
 datagen = image.ImageDataGenerator(
@@ -75,6 +75,6 @@ model.fit_generator(
 		validation_data = validation_generator,
 		validation_steps = nb_validation_samples // batch_size)
 
-model.save_weights('trained_ResNet34_centered_1.h5')
+model.save_weights('trained_ResNet34_centered_2.h5')
 
 print("Optimization Finished!")

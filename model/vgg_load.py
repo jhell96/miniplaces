@@ -1,4 +1,8 @@
 import keras
+from keras.models import Sequential
+from keras.layers import Dense, Activation, Dropout, Flatten
+from keras.layers import Conv2D
+from keras.layers import MaxPooling2D
 from keras.preprocessing import image
 from keras import backend as K
 import keras_resnet.models
