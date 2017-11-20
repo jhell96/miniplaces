@@ -9,7 +9,7 @@ import os
 from scipy import misc
 print("Imported modules")
 
-img_width, img_height = 128, 128
+img_width, img_height = 139, 139
 num_classes = 100
 
 epochs = 2
@@ -43,12 +43,12 @@ datagen = image.ImageDataGenerator(
         vertical_flip=False) # randomly flip images
 
 files = []
-for (d, dn, f) in os.walk(test_path):
+for (d, dn, f) in os.walk(test_path + 'test/'):
 	files.extend(f)
 
 imgs = []
 for file in files:
-	imgs.append(misc.imread(test_path + file))
+	imgs.append(misc.imread(test_path + 'test/' + file))
 
 imgs = np.array(imgs)
 
