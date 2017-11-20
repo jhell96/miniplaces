@@ -27,7 +27,7 @@ else:
     input_shape = (img_width, img_height, 3)
 
 model = Xception(include_top=True, weights=None, input_shape=input_shape, pooling=None, classes=num_classes)
-model.load_weights('weights/trained_xception_centered.h5')
+model.load_weights('weights/trained_xception_centered_1.h5')
 model.compile("adam", "categorical_crossentropy", ["accuracy"])
 print("Compiled model")
 
@@ -74,6 +74,6 @@ model.fit_generator(
 		validation_data = validation_generator,
 		validation_steps = nb_validation_samples // batch_size)
 
-model.save_weights('weights/trained_xception_centered_1.h5')
+model.save_weights('weights/trained_xception_centered_2.h5')
 
 print("Optimization Finished!")
