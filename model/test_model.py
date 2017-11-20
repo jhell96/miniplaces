@@ -48,6 +48,8 @@ files = []
 for (d, dn, f) in os.walk(test_path):
 	files.extend(f)
 
+files = sorted(files)
+
 imgs = []
 for file in files:
 	imgs.append(misc.imread(test_path + file))
@@ -56,5 +58,8 @@ imgs = np.array(imgs)
 
 test_datagen.fit(imgs)
 
+
 results = model.predict(imgs, batch_size=batch_size)
-print(results)
+top_5 = np.argsort(results, axis=1)[:,-5:]
+print(files)
+print(top_5)
