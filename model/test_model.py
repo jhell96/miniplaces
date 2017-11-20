@@ -45,14 +45,14 @@ test_datagen = image.ImageDataGenerator(
         vertical_flip=False) # randomly flip images
 
 files = []
-for (d, dn, f) in os.walk(test_path):
+for (d, dn, f) in os.walk(test_path + 'test/'):
 	files.extend(f)
 
 files = sorted(files)
 
 imgs = []
 for file in files:
-	imgs.append(misc.imread(test_path + file))
+	imgs.append(misc.imread(test_path + 'test/' + file))
 
 imgs = np.array(imgs)
 
@@ -66,20 +66,17 @@ test_generator = test_datagen.flow_from_directory(
         class_mode=None)
 
 # results = model.predict(imgs, batch_size=batch_size)
-result = model.predict_generator(test_generator, steps = nb_validation_samples//batch_size)
-#top_5 = np.argsort(results, axis=1)[:,-5:]
+results = model.predict_generator(test_generator, steps = nb_validation_samples//batch_size)
+top_5 = np.argsort(results, axis=1)[:,-5:]
 
-print(result)
+mapping = [0] * 100
+f = open("../data/categories.txt", "r")
+for line in f:
+    result = [x.strip() for x in line.split(' ')]
+    category, i = result[0], int(result[1])
+    mapping[i] = category
 
-#mapping = [0] * 100
-#f = open("../data/categories.txt", "r")
-#for line in f:
-#    result = [x.strip() for x in line.split(' ')]
-#    category, i = result[0], int(result[1])
-#    mapping[i] = category
-
-#mapping = np.array(mapping)
-
-#for i in range(20):
-#    print(files[i])
-#    print(mapping[top_5[i]])
+mapping = np.array(mapping)
+for i in range(20):
+    print(files[i])
+    print(mapping[top_5[i]])
