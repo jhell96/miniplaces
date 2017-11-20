@@ -12,7 +12,7 @@ print("Imported modules")
 img_width, img_height = 128, 128
 num_classes = 100
 
-epochs = 10
+epochs = 20
 batch_size = 32
 nb_train_samples = 100000
 nb_validation_samples = 10000
