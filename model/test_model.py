@@ -58,8 +58,15 @@ imgs = np.array(imgs)
 
 test_datagen.fit(imgs)
 
+test_generator = test_datagen.flow_from_directory(
+        test_path,
+        target_size = (img_width, img_height),
+        batch_size = batch_size,
+        shuffle = False,
+        class_mode=None)
 
-results = model.predict(imgs, batch_size=batch_size)
+# results = model.predict(imgs, batch_size=batch_size)
+results = model.predict_generator(test_generator, steps = nb_validation_samples//batch_size)
 top_5 = np.argsort(results, axis=1)[:,-5:]
 
 mapping = [0] * 100
