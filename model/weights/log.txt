@@ -1,0 +1,4 @@
+Xception:
+trained_xception_centered.h5 - 2 epochs
+trained_xception_centered_1.h5 - 12 epochs
+trained_xception_centered_2.h5 - 22 epochs
