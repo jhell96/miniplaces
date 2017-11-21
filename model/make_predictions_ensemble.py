@@ -6,7 +6,6 @@ from keras.metrics import top_k_categorical_accuracy
 from keras import backend as K
 import keras_resnet.models
 import numpy as np
-from DataLoader import *
 import os
 from scipy import misc
 print("Imported modules")
@@ -67,15 +66,22 @@ imgs = np.array(imgs)
 
 test_datagen.fit(imgs)
 
-test_generator = test_datagen.flow_from_directory(
+test_generator_x = test_datagen.flow_from_directory(
         test_path,
-        target_size = (img_width, img_height),
+        target_size = (img_width_x, img_height_x),
         batch_size = batch_size,
         shuffle = False,
         class_mode=None)
 
-results_x = model_x.predict_generator(test_generator, steps = nb_validation_samples//batch_size)
-results_inc = model_inc.predict_generator(test_generator, steps = nb_validation_samples//batch_size)
+test_generator_inc = test_datagen.flow_from_directory(
+        test_path,
+        target_size = (img_width_inc, img_height_inc),
+        batch_size = batch_size,
+        shuffle = False,
+        class_mode=None)
+
+results_x = model_x.predict_generator(test_generator_x, steps = nb_validation_samples//batch_size)
+results_inc = model_inc.predict_generator(test_generator_inc, steps = nb_validation_samples//batch_size)
 
 # xception - validation -  loss: 2.994, acc: 0.468, top5 acc: 0.754
 # incep_res - validation - loss: 2.884, acc: 0.444, top5 acc: 0.734
