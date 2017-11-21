@@ -1,6 +1,6 @@
 import keras
 from keras.preprocessing import image
-from keras.applications.inception_resnet_v2 import InceptionResNetV2
+from keras.applications.resnet50 import ResNet50
 from keras import backend as K
 import keras_resnet.models
 import numpy as np
@@ -8,7 +8,7 @@ import os
 from scipy import misc
 print("Imported modules")
 
-img_width, img_height = 139, 139
+img_width, img_height = 128, 128
 num_classes = 100
 
 epochs = 2
@@ -25,7 +25,7 @@ if K.image_data_format() == 'channels_first':
 else:
     input_shape = (img_width, img_height, 3)
 
-model = InceptionResNetV2(include_top=True, weights=None, input_shape=input_shape, pooling=None, classes=num_classes)
+model = ResNet50(include_top=True, weights=None, input_shape=input_shape, pooling=None, classes=num_classes)
 model.compile("adam", "categorical_crossentropy", ["accuracy", "top_k_categorical_accuracy"])
 print("Compiled model")
 
@@ -72,6 +72,6 @@ model.fit_generator(
 		validation_data = validation_generator,
 		validation_steps = nb_validation_samples // batch_size)
 
-model.save_weights('weights/trained_inception_resnet_v2_centered.h5')
+model.save_weights('weights/trained_resnet50_centered.h5')
 
 print("Optimization Finished!")
