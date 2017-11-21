@@ -3,6 +3,7 @@ data/
 data.zip
 model/weights/trained_inception_resnet_v2_centered.h5
 model/weights/trained_inception_resnet_v2_centered_1.h5
+model/weights/trained_inception_resent_v2_centered_2.h5
 
 # Compiled source #
 ###################
