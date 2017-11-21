@@ -3,7 +3,6 @@ from keras.preprocessing import image
 from keras import backend as K
 import keras_resnet.models
 import numpy as np
-from DataLoader import *
 import os
 from scipy import misc
 print("Imported modules")
