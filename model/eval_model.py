@@ -10,7 +10,7 @@ import os
 from scipy import misc
 print("Imported modules")
 
-img_width, img_height = 139, 139
+img_width, img_height = 128, 128
 num_classes = 100
 
 epochs = 2
@@ -27,8 +27,10 @@ if K.image_data_format() == 'channels_first':
 else:
     input_shape = (img_width, img_height, 3)
 
-model = InceptionResNetV2(include_top=True, weights=None, input_shape=input_shape, pooling=None, classes=num_classes)
-model.load_weights('weights/trained_inception_resnet_v2_centered_3.h5')
+#model = InceptionResNetV2(include_top=True, weights=None, input_shape=input_shape, pooling=None, classes=num_classes)
+x = keras.layers.Input(input_shape)
+model = keras_resnet.models.ResNet18(x, classes=num_classes)
+model.load_weights('weights/trained_ResNet18_5.h5')
 model.compile("adam", "categorical_crossentropy", ["accuracy", "top_k_categorical_accuracy"])
 print("Compiled model")
 
