@@ -1,16 +1,16 @@
 import keras
 from keras.preprocessing import image
 from keras.applications import Xception
+from keras.applications.inception_resnet_v2 import InceptionResNetV2
 from keras.metrics import top_k_categorical_accuracy
 from keras import backend as K
 import keras_resnet.models
 import numpy as np
-from DataLoader import *
 import os
 from scipy import misc
 print("Imported modules")
 
-img_width, img_height = 128, 128
+img_width, img_height = 139, 139
 num_classes = 100
 
 epochs = 2
@@ -27,8 +27,8 @@ if K.image_data_format() == 'channels_first':
 else:
     input_shape = (img_width, img_height, 3)
 
-model = Xception(include_top=True, weights=None, input_shape=input_shape, pooling=None, classes=num_classes)
-model.load_weights('weights/trained_xception_centered_2.h5')
+model = InceptionResNetV2(include_top=True, weights=None, input_shape=input_shape, pooling=None, classes=num_classes)
+model.load_weights('weights/trained_inception_resnet_v2_centered_3.h5')
 model.compile("adam", "categorical_crossentropy", ["accuracy", "top_k_categorical_accuracy"])
 print("Compiled model")
 
@@ -45,12 +45,12 @@ test_datagen = image.ImageDataGenerator(
         vertical_flip=False) # randomly flip images
 
 files = []
-for (d, dn, f) in os.walk(test_path):
+for (d, dn, f) in os.walk(test_path + 'test/'):
 	files.extend(f)
 
 imgs = []
 for file in files:
-	imgs.append(misc.imread(test_path + file))
+	imgs.append(misc.imread(test_path + 'test/' + file))
 
 imgs = np.array(imgs)
 
