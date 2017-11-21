@@ -12,8 +12,8 @@ print("Imported modules")
 img_width, img_height = 139, 139
 num_classes = 100
 
-epochs = 2
-batch_size = 32
+epochs = 4
+batch_size = 64
 nb_train_samples = 100000
 nb_validation_samples = 10000
 
@@ -28,7 +28,7 @@ else:
 
 model = InceptionResNetV2(include_top=True, weights=None, input_shape=input_shape, pooling=None, classes=num_classes)
 model.compile("adam", "categorical_crossentropy", ["accuracy", "top_k_categorical_accuracy"])
-mode.load_weights('weights/trained_inception_resnet_v2_centered.h5')
+model.load_weights('weights/trained_inception_resnet_v2_centered_1.h5')
 print("Compiled model")
 
 datagen = image.ImageDataGenerator(
@@ -74,6 +74,6 @@ model.fit_generator(
 		validation_data = validation_generator,
 		validation_steps = nb_validation_samples // batch_size)
 
-model.save_weights('weights/trained_inception_resnet_v2_centered_1.h5')
+model.save_weights('weights/trained_inception_resnet_v2_centered_2.h5')
 
 print("Optimization Finished!")
