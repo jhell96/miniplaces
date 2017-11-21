@@ -4,7 +4,6 @@ from keras.applications.inception_resnet_v2 import InceptionResNetV2
 from keras import backend as K
 import keras_resnet.models
 import numpy as np
-from DataLoader import *
 import os
 from scipy import misc
 print("Imported modules")
@@ -12,7 +11,7 @@ print("Imported modules")
 img_width, img_height = 139, 139
 num_classes = 100
 
-epochs = 4
+epochs = 12
 batch_size = 64
 nb_train_samples = 100000
 nb_validation_samples = 10000
@@ -28,7 +27,7 @@ else:
 
 model = InceptionResNetV2(include_top=True, weights=None, input_shape=input_shape, pooling=None, classes=num_classes)
 model.compile("adam", "categorical_crossentropy", ["accuracy", "top_k_categorical_accuracy"])
-model.load_weights('weights/trained_inception_resnet_v2_centered_1.h5')
+model.load_weights('weights/trained_inception_resnet_v2_centered_2.h5')
 print("Compiled model")
 
 datagen = image.ImageDataGenerator(
@@ -74,6 +73,6 @@ model.fit_generator(
 		validation_data = validation_generator,
 		validation_steps = nb_validation_samples // batch_size)
 
-model.save_weights('weights/trained_inception_resnet_v2_centered_2.h5')
+model.save_weights('weights/trained_inception_resnet_v2_centered_3.h5')
 
 print("Optimization Finished!")
