@@ -107,7 +107,7 @@ results_res = model_res.predict_generator(test_generator_res, steps = nb_validat
 # xception + incep_res - validation - acc:, top5 acc:
 # xception + incep_res + resnet50 - validation - acc:, top5 acc:
 acc_sum = (0.754 + 0.734 + 0.5683)
-results_ensembled = np.average([results_x, results_inc], weights=[0.754/(acc_sum), 0.734/(acc_sum)], 0.5683/(acc_sum), axis=0)
+results_ensembled = np.average([results_x, results_inc, results_res], weights=[0.754/(acc_sum), 0.734/(acc_sum), 0.5683/(acc_sum)], axis=0)
 
 top_5 = np.flip(np.argsort(results_ensembled, axis=1)[:,-5:], 1)
 
