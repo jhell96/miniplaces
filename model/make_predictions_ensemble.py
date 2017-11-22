@@ -40,7 +40,7 @@ model_res = ResNet50(include_top=True, weights=None, input_shape=input_shape_res
 
 model_x.load_weights('weights/trained_xception_centered_2.h5')
 model_inc.load_weights('weights/trained_inception_resnet_v2_centered_3.h5')
-model_res.load_weights('weights/trained_resnet50_centered_1.h5')
+model_res.load_weights('weights/trained_resnet50_centered_2.h5')
 
 model_x.compile("adam", "categorical_crossentropy", ["accuracy", "top_k_categorical_accuracy"])
 model_inc.compile("adam", "categorical_crossentropy", ["accuracy", "top_k_categorical_accuracy"])
@@ -98,11 +98,16 @@ results_x = model_x.predict_generator(test_generator_x, steps = nb_validation_sa
 results_inc = model_inc.predict_generator(test_generator_inc, steps = nb_validation_samples//batch_size)
 results_res = model_res.predict_generator(test_generator_res, steps = nb_validation_samples//batch_size)
 
+# Individual Models
 # xception - validation -  loss: 2.994, acc: 0.468, top5 acc: 0.754
 # incep_res - validation - loss: 2.884, acc: 0.444, top5 acc: 0.734
-# resnet50 - validation - loss:, acc:, top5 acc:
-acc_sum = (0.754 + 0.734)
-results_ensembled = np.average([results_x, results_inc], weights=[0.754/acc_sum, 0.734/(acc_sum)], axis=0)
+# resnet50 - validation - loss: 3.069, acc: 0.294, top5 acc: 0.5683
+
+# Ensembles
+# xception + incep_res - validation - acc:, top5 acc:
+# xception + incep_res + resnet50 - validation - acc:, top5 acc:
+acc_sum = (0.754 + 0.734 + 0.5683)
+results_ensembled = np.average([results_x, results_inc], weights=[0.754/(acc_sum), 0.734/(acc_sum)], 0.5683/(acc_sum), axis=0)
 
 top_5 = np.flip(np.argsort(results_ensembled, axis=1)[:,-5:], 1)
 
