@@ -29,7 +29,7 @@ else:
     input_shape = (img_width, img_height, 3)
 
 model = ResNet50(include_top=True, weights=None, input_shape=input_shape, pooling=None, classes=num_classes)
-model.load_weights('weights/trained_ResNet50_centered_1.h5')
+model.load_weights('weights/trained_resnet50_centered_1.h5')
 model.compile("adam", "categorical_crossentropy", ["accuracy", "top_k_categorical_accuracy"])
 print("Compiled model")
 

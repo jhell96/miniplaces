@@ -11,8 +11,8 @@ print("Imported modules")
 img_width, img_height = 197, 197
 num_classes = 100
 
-epochs = 2
-batch_size = 32
+epochs = 1
+batch_size = 64
 nb_train_samples = 100000
 nb_validation_samples = 10000
 
@@ -26,7 +26,7 @@ else:
     input_shape = (img_width, img_height, 3)
 
 model = ResNet50(include_top=True, weights=None, input_shape=input_shape, pooling=None, classes=num_classes)
-model.load_weights('weights/trained_resnet50_centered.h5')
+model.load_weights('weights/trained_resnet50_centered_1.h5')
 model.compile("adam", "categorical_crossentropy", ["accuracy", "top_k_categorical_accuracy"])
 print("Compiled model")
 
@@ -73,6 +73,6 @@ model.fit_generator(
 		validation_data = validation_generator,
 		validation_steps = nb_validation_samples // batch_size)
 
-model.save_weights('weights/trained_resnet50_centered_1.h5')
+model.save_weights('weights/trained_resnet50_centered_2.h5')
 
 print("Optimization Finished!")
