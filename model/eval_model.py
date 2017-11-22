@@ -4,6 +4,7 @@ from keras.applications import Xception
 from keras.applications.inception_resnet_v2 import InceptionResNetV2
 from keras.applications.resnet50 import ResNet50
 from keras.metrics import top_k_categorical_accuracy
+from keras.metrics import mse
 from keras import backend as K
 import keras_resnet.models
 import numpy as np
