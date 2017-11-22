@@ -5,6 +5,7 @@ from keras.applications.inception_resnet_v2 import InceptionResNetV2
 from keras.applications.resnet50 import ResNet50
 from keras.metrics import top_k_categorical_accuracy
 from keras.metrics import categorical_accuracy
+from sklearn.metrics import accuracy_score
 from keras.utils import to_categorical
 from keras import backend as K
 import keras_resnet.models
@@ -103,13 +104,13 @@ results_res = model_res.predict_generator(test_generator_res, steps = nb_validat
 # Individual Models
 # xception - validation -  loss: 2.994, acc: 0.468, top5 acc: 0.754
 # incep_res - validation - loss: 2.884, acc: 0.444, top5 acc: 0.734
-# resnet50 - validation - loss: 3.069, acc: 0.273, top5 acc: 0.5604
+# resnet50 - validation - loss: 3.069, acc: 0.294, top5 acc: 0.5683
 
 # Ensembles
 # xception + incep_res - validation - acc:, top5 acc:
 # xception + incep_res + resnet50 - validation - acc:, top5 acc:
-acc_sum = (0.754 + 0.734 + 0.5604)
-results_ensembled = np.average([results_x, results_inc, results_res], weights=[0.754/(acc_sum), 0.734/(acc_sum), 0.5604/(acc_sum)], axis=0)
+acc_sum = (0.754 + 0.734 + 0.5683)
+results_ensembled = np.average([results_x, results_inc, results_res], weights=[0.754/(acc_sum), 0.734/(acc_sum), 0.5683/(acc_sum)], axis=0)
 
 f = open('../data/val.txt', 'r')
 truth = [] 
@@ -119,7 +120,5 @@ for line in f:
 
 truth = to_categorical(np.array(truth))
 
-acc = categorical_accuracy(truth, results_ensembled)
-top5_acc = top_k_categorical_accuracy(truth, results_ensembled, k=5)
-
-print('acc:', acc, 'top5 acc:', top5_acc)
+acc = accuracy_score(truth, results_ensembled)
+print('acc:', acc)
