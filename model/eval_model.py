@@ -4,6 +4,7 @@ from keras.applications import Xception
 from keras.applications.inception_resnet_v2 import InceptionResNetV2
 from keras.applications.resnet50 import ResNet50
 from keras.metrics import top_k_categorical_accuracy
+from keras.metrics import mse
 from keras import backend as K
 import keras_resnet.models
 import numpy as np
@@ -29,7 +30,7 @@ else:
     input_shape = (img_width, img_height, 3)
 
 model = ResNet50(include_top=True, weights=None, input_shape=input_shape, pooling=None, classes=num_classes)
-model.load_weights('weights/trained_ResNet50_centered_1.h5')
+model.load_weights('weights/trained_ResNet50_centered_2.h5')
 model.compile("adam", "categorical_crossentropy", ["accuracy", "top_k_categorical_accuracy"])
 print("Compiled model")
 
